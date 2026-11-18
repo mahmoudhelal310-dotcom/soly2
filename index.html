@@ -395,7 +395,8 @@
     </div>
   </div>
 
- <div class="section-view" id="radioSection">
+  <!-- قسم الإذاعات الجديد المأخوذ من الموقع الثاني والمتوافق مع ملف radio.js -->
+  <div class="section-view" id="radioSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
     <div style="background:var(--card-bg); padding:24px 18px; border-radius:18px; text-align:center; border:1px solid var(--border); max-width:440px; margin:0 auto;">
       <div style="font-size:0.9rem; color:var(--accent); font-weight:bold; margin-bottom:10px;">by Mahmoud Helal</div>
@@ -403,9 +404,7 @@
       <h2 style="color:var(--text);">إذاعة القرآن الكريم</h2>
       <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">بث حي ومباشر لأبرز الإذاعات القرأنية</p>
       
-      <select id="radioStationSelect" class="radio-select" style="width:100%; padding:11px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text); margin-bottom:14px; outline:none; cursor:pointer;">
-        <!-- يتم تعبئة المحطات برمجياً عبر radio.js أو يمكنك وضع خياراتك مباشرة -->
-      </select>
+      <select id="radioStationSelect" class="radio-select" style="width:100%; padding:11px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text); margin-bottom:14px; outline:none; cursor:pointer;"></select>
 
       <button class="btn btn-play" id="radioPlayBtn" style="width:100%; padding:14px; border-radius:12px; font-size:1.05rem;">▶️ تشغيل الإذاعة</button>
       <div id="radioStatusText" style="font-size:0.82rem; color:var(--text-muted); margin-top:8px; display:none;"></div>
@@ -677,7 +676,7 @@
     const hadithsList = [
       {
         title: "إنما الأعمال بالنيات",
-        text: "عن أمير المؤمنين أبي حفص عمر بن الخطاب رضي الله عنه قال: سمعت رسول الله ﷺ يقول: «إِنَّمَا الأَعْمَالُ بالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ ما نَوَى...».",
+        text: "عن أمير المؤمنين أبي حفص عمر بن الخطاب رضي الله عنه قال: سمعت رسول الله ﷺ يقول: «إِنَّمَا الأَعْمَالُ بالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ ما نَوَى...».",
         source: "رواه البخاري (1) ومسلم (1907)",
         sharah: "النية شرط لقبول العمل وصحته؛ فمن أخلص عمله لله أثابه الله."
       }
@@ -714,7 +713,7 @@
     }
 
     const periodicAzkarReminders = [
-      "ﷺ اللهم صلِّ وسلم وبارك على نبينا محمد",
+      "ﷺ اللهم صلِّ وسلم وبارك على نبينا محمد",
       "🌿 أستغفر الله العظيم وأتوب إليه",
       "✨ سبحان الله وبحمده، سبحان الله العظيم"
     ];
@@ -763,8 +762,6 @@
     const bookmarkText = document.getElementById("bookmarkText");
 
     let radioPlaying = false;
-    const liveRadioAudio = document.getElementById("liveRadioAudio");
-    const radioPlayBtn = document.getElementById("radioPlayBtn");
     const adhanAudio = document.getElementById("adhanAudio");
 
     reciters.forEach((reciter, index) => {
@@ -851,7 +848,7 @@
 
     function playSurahByIndex(index) {
       if (index < 0 || index >= 114) return;
-      if (radioPlaying) toggleRadioPlay();
+      if (typeof radioPlaying !== 'undefined' && radioPlaying && typeof toggleRadioPlay === 'function') toggleRadioPlay();
       stopAyahAudio();
       stopIbtihalVideo();
 
@@ -927,7 +924,7 @@
       const reciter = ayahReciters[reciterIdx] || ayahReciters[0];
 
       if (audioPlayer && !audioPlayer.paused) audioPlayer.pause();
-      if (radioPlaying) toggleRadioPlay();
+      if (typeof radioPlaying !== 'undefined' && radioPlaying && typeof toggleRadioPlay === 'function') toggleRadioPlay();
       stopAyahAudio();
 
       ayahPlaySequenceState = {
@@ -1004,7 +1001,7 @@
         if (data.code === 200 && data.data) {
           currentSurahTotalAyahs = data.data.ayahs.length;
           let html = "";
-          if (surahId !== 1 && surahId !== 9) { html += '<div class="bismillah">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>'; }
+          if (surahId !== 1 && surahId !== 9) { html += '<div class="bismillah">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>'; }
           data.data.ayahs.forEach((ayah) => {
             let aText = ayah.text.trim();
             if (surahId !== 1 && surahId !== 9 && ayah.numberInSurah === 1) {
@@ -1084,7 +1081,7 @@
       ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)'; ctx.lineWidth = 1.5; ctx.strokeRect(70, 70, 940, 1780);
 
       ctx.textAlign = 'center'; ctx.fillStyle = '#d4af37'; ctx.font = 'bold 44px Cairo, sans-serif';
-      ctx.fillText('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', 540, 150);
+      ctx.fillText('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', 540, 150);
 
       ctx.fillStyle = '#ffffff'; ctx.font = 'bold 36px Cairo, sans-serif';
       const surahTag = currentShareSurahName ? `${currentShareSurahName} — الآية (${currentShareAyahNum})` : 'آية مباركة';
@@ -1229,101 +1226,6 @@
       } catch (e) { resultsContainer.innerHTML = '<div>خطأ في الاتصال.</div>'; }
     }
 
-    // روابط البث المباشر (مع تفعيل سيرفرات HTTPS آمنة تماماً)
-    const radioStationsMap = {
-      cairo: [
-        "https://stream.radiojar.com/8s5u5tpdtwzuv",
-        "https://n03.radiojar.com/8s5u5tpdtwzuv"
-      ],
-      tarateel: [
-        "https://backup.qurango.net/radio/tarateel"
-      ],
-      roqiah: [
-        "https://backup.qurango.net/radio/roqiah"
-      ]
-    };
-
-    let currentStationKey = "cairo";
-    let currentStreamAttempt = 0;
-
-    function isInAppBrowser() {
-      const ua = navigator.userAgent || navigator.vendor || window.opera || "";
-      return /FBAN|FBAV|FB_IAB|Instagram|Messenger|Line|Snapchat/i.test(ua);
-    }
-
-    function openInExternalBrowser() {
-      const currentUrl = window.location.href;
-      const isAndroid = /Android/i.test(navigator.userAgent || "");
-      if (isAndroid) {
-        const cleanUrl = currentUrl.replace(/^https?:\/\//, "");
-        window.location.href = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
-      } else {
-        window.open(currentUrl, "_blank");
-        alert("اضغط على النقاط الثلاث في الأعلى ثم اختر 'فتح في المتصفح'.");
-      }
-    }
-
-    function changeRadioStation() {
-      currentStationKey = document.getElementById("radioStationSelect").value;
-      currentStreamAttempt = 0;
-      if (radioPlaying) startPlayingCurrentStation();
-    }
-
-    function startPlayingCurrentStation() {
-      const streams = radioStationsMap[currentStationKey] || radioStationsMap.cairo;
-      const statusText = document.getElementById("radioStatusText");
-      if (statusText) {
-        statusText.style.display = "block";
-        statusText.innerText = "⏳ جاري الاتصال بالبث المباشر...";
-      }
-
-      liveRadioAudio.src = streams[currentStreamAttempt % streams.length];
-      liveRadioAudio.load();
-      
-      const playPromise = liveRadioAudio.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          radioPlaying = true;
-          radioPlayBtn.innerHTML = "⏸️ إيقاف الإذاعة";
-          radioPlayBtn.style.background = "#e74c3c";
-          radioPlayBtn.style.color = "#fff";
-          if (statusText) statusText.innerText = "🔴 البث المباشر يعمل الآن";
-        }).catch((err) => {
-          currentStreamAttempt++;
-          if (currentStreamAttempt < streams.length) {
-            startPlayingCurrentStation();
-          } else {
-            radioPlaying = false;
-            radioPlayBtn.innerHTML = "▶️ تشغيل الإذاعة";
-            radioPlayBtn.style.background = "var(--primary)";
-            radioPlayBtn.style.color = "#fff";
-            if (statusText) statusText.innerText = "⚠️ تعذر تشغيل البث في متصفح فيسبوك الداخلي.";
-            if (isInAppBrowser()) {
-              const notice = document.getElementById("inAppBrowserNotice");
-              if (notice) notice.style.display = "block";
-            }
-          }
-        });
-      }
-    }
-
-    function toggleRadioPlay() {
-      if (!radioPlaying) {
-        if (audioPlayer) audioPlayer.pause();
-        stopAyahAudio();
-        currentStreamAttempt = 0;
-        startPlayingCurrentStation();
-      } else {
-        liveRadioAudio.pause();
-        radioPlayBtn.innerHTML = "▶️ تشغيل الإذاعة";
-        radioPlayBtn.style.background = "var(--primary)";
-        radioPlayBtn.style.color = "#fff";
-        radioPlaying = false;
-        const statusText = document.getElementById("radioStatusText");
-        if (statusText) statusText.style.display = "none";
-      }
-    }
-
     function openSection(sectionId) {
       document.getElementById("homeDashboard").style.display = "none";
       document.querySelectorAll(".section-view").forEach(el => el.style.display = "none");
@@ -1332,7 +1234,6 @@
       if (sectionId === 'azkarSection') loadAzkarCategory('morning');
       if (sectionId === 'hadithSection') renderHadiths();
       if (sectionId === 'ibtihalatSection') { renderIbtihalat(); }
-      if (sectionId === 'radioSection' && isInAppBrowser()) { const n = document.getElementById('inAppBrowserNotice'); if (n) n.style.display = 'block'; }
     }
 
     const ibtihalatList = [
@@ -1382,7 +1283,7 @@
 
     function playIbtihalVideo(videoId, title, reciter) {
       if (audioPlayer && !audioPlayer.paused) audioPlayer.pause();
-      if (radioPlaying) toggleRadioPlay();
+      if (typeof radioPlaying !== 'undefined' && radioPlaying && typeof toggleRadioPlay === 'function') toggleRadioPlay();
       stopAyahAudio();
 
       activeIbtihalVideoId = videoId;
@@ -1412,7 +1313,7 @@
     const azkarData = {
       morning: [
         { text: "أَصْبَحْنَا وَأَصْبَحَ المُلْكُ لِلَّهِ، وَالحَمْدُ لِلَّهِ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ.", target: 1 },
-        { text: "رَضِيتُ بِاللَّهِ رَبّاً، وَبِالإِسْلَامِ دِيناً، وَبُِمَحَمَّدٍ ﷺ نَبِيّاً.", target: 3 }
+        { text: "رَضِيتُ بِاللَّهِ رَبّاً، وَبِالإِسْلَامِ دِيناً، وَبُِمَحَمَّدٍ ﷺ نَبِيّاً.", target: 3 }
       ],
       evening: [
         { text: "أَمْسَيْنَا وَأَمْسَى المُلْكُ لِلَّهِ، وَالحَمْدُ لِلَّهِ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ.", target: 1 }
@@ -1713,6 +1614,8 @@
       updateTasbeehUI();
     });
   </script>
+  
+  {/* ربط ملف الـ JavaScript الخاص بالإذاعات المأخوذ من الموقع الثاني */}
   <script src="radio.js"></script>
 </body>
 </html>
