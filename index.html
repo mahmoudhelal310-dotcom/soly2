@@ -395,28 +395,21 @@
     </div>
   </div>
 
-  <div class="section-view" id="radioSection">
+ <div class="section-view" id="radioSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
     <div style="background:var(--card-bg); padding:24px 18px; border-radius:18px; text-align:center; border:1px solid var(--border); max-width:440px; margin:0 auto;">
       <div style="font-size:0.9rem; color:var(--accent); font-weight:bold; margin-bottom:10px;">by Mahmoud Helal</div>
       <div style="font-size:48px; margin-bottom:10px;">📻</div>
-      <h2 style="color:var(--text);">الإذاعات والمحطات المباشرة</h2>
-      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">بث حي ومباشر على مدار الساعة</p>
-      <select id="radioStationSelect" onchange="changeRadioStation()" style="width:100%; padding:11px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text); margin-bottom:14px; outline:none; cursor:pointer;">
-        <option value="cairo" selected>📻 إذاعة القرآن الكريم من القاهرة</option>
-        <option value="tarateel">🎧 تلاوات خاشعة منوعة</option>
-        <option value="roqiah">🛡️ إذاعة الرقية الشرعية</option>
+      <h2 style="color:var(--text);">إذاعة القرآن الكريم</h2>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">بث حي ومباشر لأبرز الإذاعات القرأنية</p>
+      
+      <select id="radioStationSelect" class="radio-select" style="width:100%; padding:11px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text); margin-bottom:14px; outline:none; cursor:pointer;">
+        <!-- يتم تعبئة المحطات برمجياً عبر radio.js أو يمكنك وضع خياراتك مباشرة -->
       </select>
-      <button class="btn btn-play" id="radioPlayBtn" onclick="toggleRadioPlay()" style="width:100%; padding:14px; border-radius:12px; font-size:1.05rem;">▶️ تشغيل الإذاعة</button>
+
+      <button class="btn btn-play" id="radioPlayBtn" style="width:100%; padding:14px; border-radius:12px; font-size:1.05rem;">▶️ تشغيل الإذاعة</button>
       <div id="radioStatusText" style="font-size:0.82rem; color:var(--text-muted); margin-top:8px; display:none;"></div>
       
-      <!-- تنبيه و زر الفتح في متصفح خارجي يعمل تلقائياً داخل فيسبوك -->
-      <div id="inAppBrowserNotice" style="display:none; margin-top:12px; padding:12px; border-radius:12px; background:var(--accent-soft); border:1px dashed var(--accent); font-size:0.84rem; line-height:1.7; color:var(--text);">
-        ⚠️ متصفح فيسبوك الداخلي يمنع تشغيل البث المباشر أحياناً.<br>
-        <button type="button" onclick="openInExternalBrowser()" class="btn btn-read" style="margin-top:8px; width:100%; padding:10px; border:1px solid var(--accent);">🌐 فتح في متصفح الهاتف (Chrome)</button>
-      </div>
-
-      <!-- عنصر الصوت المعدل بالكامل ليتوافق مع جميع القيود -->
       <audio id="liveRadioAudio" preload="auto" playsinline crossorigin="anonymous"></audio>
     </div>
   </div>
